@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden;
+        }
+        #chart {
+            width: 100%;
+            height: 100%;
+            min-height: 450px;
+        }
+        .controls {
+            padding: 10px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        select {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background: white;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        label {
+            font-weight: 600;
+            color: inherit;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label for="year-select">Year:</label>
+        <select id="year-select">
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021" selected>2021</option>
+        </select>
+    </div>
+    <div id="chart"></div>
+    <script>
+        // Data configuration
+        const yearlyData = {
+            '2018': { domestic: 710, mnc: 290 },
+            '2019': { domestic: 705, mnc: 295 },
+            '2020': { domestic: 715, mnc: 285 },
+            '2021': { domestic: 732, mnc: 268 }
+        };
+
+        function updateChart(year) {
+            const data = [{
+                values: [yearlyData[year].domestic, yearlyData[year].mnc],
+                labels: ['Domestic Firms', 'Multinational Firms'],
+                type: 'pie',
+                hole: 0.4,
+                marker: {
+                    colors: ['#332D56', '#71C0BB']
+                },
+                textinfo: 'label+percent',
+                hovertemplate: '%{label}: %{value} firms (%{percent})<extra></extra>',
+                textposition: 'inside'
+            }];
+
+            const layout = {
+                title: { 
+                    text: `Multinational vs Domestic Firms (${year})`,
+                    font: { size: 16 }
+                },
+                margin: { l: 30, r: 30, t: 50, b: 30 },
+                height: 400,
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: 'inherit' },
+                showlegend: false,
+                annotations: [{
+                    text: `Total: ${yearlyData[year].domestic + yearlyData[year].mnc}`,
+                    showarrow: false,
+                    font: { size: 14 }
+                }]
+            };
+
+            Plotly.newPlot('chart', data, layout, { responsive: true });
+        }
+
+        // Initialize chart
+        updateChart('2021');
+
+        // Event listeners for controls
+        document.getElementById('year-select').addEventListener('change', function() {
+            updateChart(this.value);
+        });
+
+        // Theme change handler
+        window.addEventListener('message', function(event) {
+            if (event.data === 'dark-mode') {
+                document.body.style.color = '#F6F4F0';
+                Plotly.relayout('chart', {
+                    'font.color': '#F6F4F0'
+                });
+            } else if (event.data === 'light-mode') {
+                document.body.style.color = '#332D56';
+                Plotly.relayout('chart', {
+                    'font.color': '#332D56'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
