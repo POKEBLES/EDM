@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden;
+        }
+        #chart {
+            width: 100%;
+            height: 100%;
+            min-height: 450px;
+        }
+        .controls {
+            padding: 10px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        select {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background: white;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        label {
+            font-weight: 600;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label for="year-select">Year:</label>
+        <select id="year-select">
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021" selected>2021</option>
+        </select>
+        
+        <label for="view-select">View:</label>
+        <select id="view-select">
+            <option value="bars" selected>Bars</option>
+            <option value="pie">Pie Chart</option>
+        </select>
+    </div>
+    <div id="chart"></div>
+    <script>
+        // Data configuration
+        const industries = ['Manufacturing', 'Services', 'Retail', 'Finance', 'Construction', 'Transport'];
+        const yearlyData = {
+            '2018': [310, 270, 140, 110, 90, 80],
+            '2019': [315, 275, 145, 115, 85, 65],
+            '2020': [318, 278, 148, 118, 82, 56],
+            '2021': [320, 280, 150, 120, 80, 50]
+        };
+        const colors = ['#332D56', '#4E6688', '#71C0BB', '#E3EEB2', '#2E5077', '#4DA1A9'];
+
+        function updateChart(year, viewType) {
+            let chartData;
+            
+            if (viewType === 'bars') {
+                chartData = [{
+                    x: yearlyData[year],
+                    y: industries,
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: { color: colors },
+                    textposition: 'auto',
+                    hovertemplate: '%{y}<br>Number of Firms: %{x}<extra></extra>'
+                }];
+            } else {
+                chartData = [{
+                    values: yearlyData[year],
+                    labels: industries,
+                    type: 'pie',
+                    hole: 0.4,
+                    marker: { colors: colors },
+                    textinfo: 'percent',
+                    hovertemplate: '%{label}: %{value} firms (%{percent})<extra></extra>'
+                }];
+            }
+
+            const layout = {
+                title: { 
+                    text: `Firm Distribution by Industry (${year})`,
+                    font: { size: 16 }
+                },
+                margin: { l: viewType === 'bars' ? 120 : 30, r: 30, t: 50, b: 50 },
+                height: 400,
+                xaxis: viewType === 'bars' ? { title: 'Number of Firms' } : {},
+                yaxis: viewType === 'bars' ? { automargin: true } : {},
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: 'inherit' },
+                showlegend: viewType === 'pie'
+            };
+
+            Plotly.newPlot('chart', chartData, layout, { responsive: true });
+        }
+
+        // Initialize chart
+        updateChart('2021', 'bars');
+
+        // Event listeners for controls
+        document.getElementById('year-select').addEventListener('change', function() {
+            updateChart(this.value, document.getElementById('view-select').value);
+        });
+
+        document.getElementById('view-select').addEventListener('change', function() {
+            updateChart(document.getElementById('year-select').value, this.value);
+        });
+
+        // Theme change handler
+        window.addEventListener('message', function(event) {
+            if (event.data === 'dark-mode') {
+                document.body.style.color = '#F6F4F0';
+                Plotly.relayout('chart', {
+                    'font.color': '#F6F4F0'
+                });
+            } else if (event.data === 'light-mode') {
+                document.body.style.color = '#332D56';
+                Plotly.relayout('chart', {
+                    'font.color': '#332D56'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
