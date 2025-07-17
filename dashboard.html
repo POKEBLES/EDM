@@ -11,25 +11,185 @@
     :root {
         /* Light Theme Colors */
         --primary-navy: #332D56;
-        --sidebar-bg: #332D56;
+        --sidebar-gradient: linear-gradient(to bottom, var(--primary-navy), #2a254a); /* Subtle dark gradient */
+        --sidebar-bg: var(--sidebar-gradient); /* Now uses the gradient */
         --sidebar-header-color: #bff7d7;
-        --sidebar-text-color: #4E6688;
+        --sidebar-text-color: #b1cbf0;
         --side-nav-link-hover: #4E6688;
         --side-nav-link-active-bg: #71C0BB;
         --side-nav-link-active-shadow: rgba(113, 192, 187, 0.3);
         --content-area-bg: #E3EEB2;
-        --card-background: #FFFFFF;
+        --card-background: #ffffff;
         --border-color: #4E6688;
         --text-dark: #332D56;
-        --text-light: #E3EEB2;
+        --text-light: #eaf2c7;
         --harvard-crimson: #71C0BB;
         --shadow-light: rgba(51, 45, 86, 0.08);
         --shadow-medium: rgba(51, 45, 86, 0.15);
-        --toggle-bg-light: #4E6688;
-        --toggle-slider-light: #E3EEB2;
+        --toggle-bg-light: #6f8cb5;
+        --toggle-slider-light: #f1ffb1;
         --toggle-active-bg: #71C0BB;
         --toggle-active-slider: #83BEB2;
         --kpi-purple: #756AB6;
+    }
+
+    html, body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    /* KPI Grid: 4 cards, smaller size */
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+    .kpi-card {
+        background: var(--card-background);
+        border-radius: 10px;
+        box-shadow: 0 2px 8px var(--shadow-light);
+        border: 1.5px solid #f0f0f0;
+        padding: 1.1rem 1.5rem 0.7rem 1.2rem;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        min-width: 0;
+        min-height: 70px;
+        max-width: 320px;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        transition: box-shadow 0.2s;
+    }
+    .kpi-icon {
+        font-size: 1.1rem;
+        margin-bottom: 0.1rem;
+        color: #332D56;
+        margin-right: 0.7rem;
+    }
+    .kpi-value {
+        font-size: 1.45rem;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 0.1rem;
+        letter-spacing: 0.5px;
+    }
+    .kpi-label {
+        font-size: 0.78rem;
+        color: #888;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        margin-bottom: 0.2rem;
+    }
+    .kpi-change {
+        font-size: 0.85rem;
+        margin-top: 0.1rem;
+        font-weight: 600;
+    }
+
+    /* Charts Grid: 3 columns */
+    .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 0.7rem;
+        margin-top: 1.2rem;
+    }
+    .chart-container {
+        background: var(--card-background);
+        border-radius: 10px;
+        box-shadow: 0 2px 8px var(--shadow-light);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        min-height: 120px;
+        height: 100%;
+    }
+    /* Custom grid placement for each chart */
+    .chart-bar1 { grid-column: 1 / 3; grid-row: 1 / 2; }
+    .chart-donut { grid-column: 3 / 4; grid-row: 1 / 2; }
+    .chart-line { grid-column: 1 / 2; grid-row: 2 / 3; }
+    .chart-bar3 { grid-column: 2 / 3; grid-row: 2 / 3; }
+    .chart-verticalbar { grid-column: 3 / 4; grid-row: 2 / 3; }
+    .chart-scatter { grid-column: 1 / 3; grid-row: 3 / 4; }
+    .chart-bar2 { grid-column: 3 / 4; grid-row: 3 / 4; }
+    .chart-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary-navy);
+    }
+    .chart-controls {
+        font-family: 'Segoe UI', Arial, sans-serif !important;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        margin-bottom: 0.5rem;
+    }
+    .chart-controls label,
+    .chart-controls select,
+    .chart-controls button {
+        font-family: 'Segoe UI', Arial, sans-serif !important;
+        font-size: 0.95rem !important;
+    }
+    .chart-controls select {
+        padding: 0.2rem 0.7rem;
+        border-radius: 5px;
+        border: 1px solid #d1d5db;
+    }
+    .chart-controls button {
+        padding: 0.22rem 1.1rem;
+        border-radius: 5px;
+        border: none;
+        background: #332D56;
+        color: #fff;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .chart-scroll-container {
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: visible;
+    }
+    .chart-iframe {
+        width: 100%;
+        height: 270px;
+        border: none;
+    }
+
+    /* Make predictive and line chart span 2 columns */
+    .chart-container.predictive-span {
+        grid-column: span 2;
+    }
+    .chart-container.linechart-span {
+        grid-column: span 2;
+    }
+
+    /* Responsive for mobile */
+    @media (max-width: 900px) {
+        .charts-grid {
+            grid-template-columns: 1fr;
+        }
+        .kpi-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+        .chart-container.predictive-span,
+        .chart-container.linechart-span {
+            grid-column: span 1;
+        }
+    }
+    @media (max-width: 600px) {
+        .charts-grid, .kpi-grid {
+            grid-template-columns: 1fr;
+        }
+        .kpi-card {
+            max-width: 100%;
+        }
     }
 
     /* Dark Mode Variables */
@@ -37,11 +197,11 @@
         --primary-navy: #2E5077;
         --sidebar-bg: #2E5077;
         --sidebar-header-color: #F6F4F0;
-        --sidebar-text-color: #4DA1A9;
-        --side-nav-link-hover: #4DA1A9;
+        --sidebar-text-color: #b9f9ff;
+        --side-nav-link-hover: #64b7a3;
         --side-nav-link-active-bg: #79D7BE;
-        --content-area-bg: #2E5077;
-        --card-background: #4DA1A9;
+        --content-area-bg: #142c48;
+        --card-background: #142c48;
         --border-color: #79D7BE;
         --text-dark: #F6F4F0;
         --text-light: #2E5077;
@@ -54,9 +214,17 @@
         --toggle-active-slider: #F6F4F0;
         --kpi-purple: #A78BFA;
     }
-    </style>
+</style>
 </head>
 <body>
+    <style>
+    .sidebar {
+        background: linear-gradient(to right, #332D56, #316983);
+    }
+    body.dark-mode .sidebar {
+        background: linear-gradient(to right, #1c334d, #41819e);
+    }
+    </style>
     <div class="sidebar">
         <div class="sidebar-header">
             <img src="logo 1.png" alt="Company Logo" class="site-logo light-mode-logo">
@@ -119,71 +287,76 @@
                 <div id="overview" class="sub-tab-content active">
                     <div class="kpi-grid">
                         <div class="kpi-card">
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; flex: 1;">
+                                <div class="kpi-label">Total Revenue</div>
+                                <div class="kpi-value">P7,521.84B</div>
+                                <div class="kpi-change positive">11.83% YoY</div>
+                            </div>
                             <span class="kpi-icon"><i class="fas fa-chart-line"></i></span>
-                            <div class="kpi-value">P7,521.84B</div>
-                            <div class="kpi-label">Total Revenue</div>
-                            <div class="kpi-change positive">11.83% YoY</div>
                         </div>
                         <div class="kpi-card">
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; flex: 1;">
+                                <div class="kpi-label">New Multinational Firms</div>
+                                <div class="kpi-value">2</div>
+                                <div class="kpi-change positive">compared to prev. year</div>
+                            </div>
                             <span class="kpi-icon"><i class="fas fa-globe"></i></span>
-                            <div class="kpi-value">2</div>
-                            <div class="kpi-label">New Multinational Firms</div>
-                            <div class="kpi-change positive">compared to prev. year</div>
                         </div>
                         <div class="kpi-card">
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; flex: 1;">
+                                <div class="kpi-label">Completed Export Orders</div>
+                                <div class="kpi-value">244</div>
+                                <div class="kpi-change positive">Exporting Firms</div>
+                            </div>
                             <span class="kpi-icon"><i class="fas fa-box-open"></i></span>
-                            <div class="kpi-value">244</div>
-                            <div class="kpi-label">Completed Export Orders</div>
-                            <div class="kpi-change positive">Exporting Firms</div>
                         </div>
                         <div class="kpi-card">
+                            <div style="display: flex; flex-direction: column; align-items: flex-start; flex: 1;">
+                                <div class="kpi-label">Spending</div>
+                                <div class="kpi-value">P7,888.75B</div>
+                                <div class="kpi-change positive">using Total Assets</div>
+                            </div>
                             <span class="kpi-icon"><i class="fas fa-wallet"></i></span>
-                            <div class="kpi-value">P7,888.75B</div>
-                            <div class="kpi-label">Spending</div>
-                            <div class="kpi-change positive">using Total Assets</div>
                         </div>
                     </div>
 
                     <div class="charts-grid">
-                        <!-- Row 1 -->
-                        <div class="chart-container">
-                            <div class="chart-title">Profit Rate by Industry</div>
-                            <div class="chart-scroll-container">
-                                <iframe src="profit_by_industry.html" frameborder="0" class="chart-iframe"></iframe>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <div class="chart-title">Multinational vs Domestic</div>
-                            <div class="chart-scroll-container">
-                                <iframe src="mnc_vs_domestic.html" frameborder="0" class="chart-iframe"></iframe>
-                            </div>
-                        </div>
-                        
-                        <!-- Row 2 -->
-                        <div class="chart-container">
-                            <div class="chart-title">Sales Performance</div>
+                        <!-- 1st row: sales_performance.html (spans 2 cols), mnc_vs_domestic.html -->
+                        <div class="chart-container chart-bar1">
                             <div class="chart-scroll-container">
                                 <iframe src="sales_performance.html" frameborder="0" class="chart-iframe"></iframe>
                             </div>
                         </div>
-                        <div class="chart-container">
-                            <div class="chart-title">Exporters Profit Rate</div>
+                        <div class="chart-container chart-donut">
                             <div class="chart-scroll-container">
-                                <iframe src="exporters_profit.html" frameborder="0" class="chart-iframe"></iframe>
+                                <iframe src="mnc_vs_domestic.html" frameborder="0" class="chart-iframe"></iframe>
                             </div>
                         </div>
-                        
-                        <!-- Row 3 -->
-                        <div class="chart-container">
-                            <div class="chart-title">Equity Ratio by Industry</div>
+                        <!-- 2nd row: profit_by_industry.html, equity_ratio.html, firms_distribution.html -->
+                        <div class="chart-container chart-line">
+                            <div class="chart-scroll-container">
+                                <iframe src="profit_by_industry.html" frameborder="0" class="chart-iframe"></iframe>
+                            </div>
+                        </div>
+                        <div class="chart-container chart-bar3">
                             <div class="chart-scroll-container">
                                 <iframe src="equity_ratio.html" frameborder="0" class="chart-iframe"></iframe>
                             </div>
                         </div>
-                        <div class="chart-container">
-                            <div class="chart-title">Firms Distribution</div>
+                        <div class="chart-container chart-verticalbar">
                             <div class="chart-scroll-container">
                                 <iframe src="firms_distribution.html" frameborder="0" class="chart-iframe"></iframe>
+                            </div>
+                        </div>
+                        <!-- 3rd row: predictive_chart.html (spans 2 cols), exporters_profit.html -->
+                        <div class="chart-container chart-scatter">
+                            <div class="chart-scroll-container">
+                                <iframe src="predictive_chart.html" frameborder="0" class="chart-iframe"></iframe>
+                            </div>
+                        </div>
+                        <div class="chart-container chart-bar2">
+                            <div class="chart-scroll-container">
+                                <iframe src="exporters_profit.html" frameborder="0" class="chart-iframe"></iframe>
                             </div>
                         </div>
                     </div>
@@ -191,20 +364,7 @@
 
                
 
-                <div id="predictive" class="sub-tab-content">
-                    <div class="forecast-controls">
-                        <div class="control-group">
-                        </div>
-                    </div>
-                    <div class="charts-grid">
-                        <div class="chart-container">
-                            <div class="chart-title">Predictive Profit Rate Chart</div>
-                            <div class="chart-scroll-container">
-                                <iframe src="predictive_chart.html" frameborder="0" class="chart-iframe"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Predictive tab content removed as scatter plot is now in main grid -->
 
 
                 
@@ -359,5 +519,20 @@
         </footer>
     </div>
     <script src="script.js"></script>
+    <script>
+    // Predictive chart controls: update iframe src on year change
+    document.addEventListener('DOMContentLoaded', function() {
+        var updateBtn = document.getElementById('predictive-update-btn');
+        var yearSelect = document.getElementById('predictive-year');
+        var predictiveIframe = document.querySelector('.chart-scatter iframe');
+        if (updateBtn && yearSelect && predictiveIframe) {
+            updateBtn.addEventListener('click', function() {
+                var year = yearSelect.value;
+                // Assumes predictive_chart.html can accept ?year=YYYY
+                predictiveIframe.src = 'predictive_chart.html?year=' + year;
+            });
+        }
+    });
+    </script>
 </body>
 </html>
