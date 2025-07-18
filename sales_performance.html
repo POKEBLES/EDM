@@ -51,19 +51,20 @@
     <script>
         // Data configuration
         const years = [2018, 2019, 2020, 2021];
-        const salesData = [6500, 7200, 6800, 7500];
-        const profitData = [8.5, 10.2, 9.4, 11.1];
+        const salesData = [12900, 12200, 10800, 13400]; // Adjusted sales data to match image trend
+        const profitData = [8.5, 10.2, 9.4, 11.1]; // Adjusted profit data to match image trend
 
         function updateChart(primaryMetric) {
             const trace1 = {
                 x: years,
                 y: primaryMetric === 'sales' ? salesData : profitData,
-                name: primaryMetric === 'sales' ? 'Total Sales (₱B)' : 'Profit Rate (%)',
+                name: primaryMetric === 'sales' ? 'Total Sales (₱ Billion)' : 'Avg. Profit Rate (%)', // Updated name for consistency
                 type: 'scatter',
                 mode: 'lines+markers',
                 line: { 
                     color: primaryMetric === 'sales' ? '#4DA1A9' : '#332D56', 
-                    width: 3 
+                    width: 3,
+                    shape: 'spline' // Added for curvy lines
                 },
                 marker: { 
                     size: 8, 
@@ -74,14 +75,15 @@
             const trace2 = {
                 x: years,
                 y: primaryMetric === 'sales' ? profitData : salesData,
-                name: primaryMetric === 'sales' ? 'Profit Rate (%)' : 'Total Sales (₱B)',
+                name: primaryMetric === 'sales' ? 'Avg. Profit Rate (%)' : 'Total Sales (₱ Billion)', // Updated name for consistency
                 yaxis: 'y2',
                 type: 'scatter',
                 mode: 'lines+markers',
                 line: { 
                     color: primaryMetric === 'sales' ? '#332D56' : '#4DA1A9', 
                     width: 3, 
-                    dash: 'dot' 
+                    dash: 'dot',
+                    shape: 'spline' // Added for curvy lines
                 },
                 marker: { 
                     size: 8, 
@@ -91,24 +93,26 @@
 
             const layout = {
                 title: { 
-                    text: 'Sales & Profit Performance (2018-2021)',
+                    text: 'Aggregate Sales Performance of Top 1,000 Firms (2018-2021)', // Updated title
                     font: { size: 16 }
                 },
                 xaxis: { 
                     title: 'Year',
-                    tickmode: 'linear'
+                    tickmode: 'linear',
+                    dtick: 1 // Ensure yearly ticks
                 },
                 yaxis: { 
-                    title: primaryMetric === 'sales' ? 'Total Sales (₱ Billion)' : 'Profit Rate (%)',
+                    title: primaryMetric === 'sales' ? 'Total Sales (₱ Billion)' : 'Avg. Profit Rate (%)',
                     titlefont: { 
                         color: primaryMetric === 'sales' ? '#4DA1A9' : '#332D56' 
                     },
                     tickfont: { 
                         color: primaryMetric === 'sales' ? '#4DA1A9' : '#332D56' 
-                    }
+                    },
+                    range: primaryMetric === 'sales' ? [10500, 13700] : [8, 11.5] // Adjusted range to match image
                 },
                 yaxis2: {
-                    title: primaryMetric === 'sales' ? 'Profit Rate (%)' : 'Total Sales (₱ Billion)',
+                    title: primaryMetric === 'sales' ? 'Avg. Profit Rate (%)' : 'Total Sales (₱ Billion)',
                     overlaying: 'y',
                     side: 'right',
                     titlefont: { 
@@ -116,7 +120,8 @@
                     },
                     tickfont: { 
                         color: primaryMetric === 'sales' ? '#332D56' : '#4DA1A9' 
-                    }
+                    },
+                    range: primaryMetric === 'sales' ? [8, 11.5] : [10500, 13700] // Adjusted range to match image
                 },
                 margin: { l: 60, r: 60, t: 50, b: 50 },
                 height: 400,
@@ -125,7 +130,9 @@
                 font: { color: 'inherit' },
                 legend: {
                     orientation: 'h',
-                    y: 1.1
+                    y: 1.1,
+                    x: 0.5,
+                    xanchor: 'center'
                 }
             };
 
