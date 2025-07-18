@@ -427,6 +427,8 @@ body.dark-mode .negative {
     color: #FED7D7;
 }
 
+
+
 /* Charts Grid */
 .charts-grid {
     display: grid;
@@ -874,6 +876,8 @@ body.dark-mode .site-footer {
     }
 }
 
+
+
 @media (max-width: 480px) {
     .kpi-grid {
         grid-template-columns: 1fr;
@@ -891,3 +895,77 @@ body.dark-mode .site-footer {
         font-size: 1.6rem;
     }
 }
+
+.flip-card {
+    background-color: transparent;
+    width: 240px; /* slightly wider */
+    height: 345px; /* taller to allow space for name & role */
+    perspective: 1000px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    padding: 1rem;
+    text-align: center;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .flip-card-front {
+    z-index: 2;
+    justify-content: flex-start;
+    background: #dde2ac;
+  }
+  
+  .flip-card-back {
+    transform: rotateY(180deg);
+    background: #9fc7d5;
+    justify-content: center; /* Center paragraph vertically */
+    overflow-y: auto;
+  }
+  
+  .member-img {
+    width: 100%;
+    height: 200px; /* taller image frame */
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+  }
+  
+  .flip-card h3 {
+    font-size: 1.2rem !important;
+    font-weight: 600;
+    margin: 0.3rem 0 0.2rem;
+    color: #332D56;
+    text-align: center;
+  }
+  
+  .flip-card p {
+    font-size: 1rem;
+    color: #1d0e3b;
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+  
