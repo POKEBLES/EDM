@@ -269,7 +269,7 @@ input:checked + .slider .icon-dark {
     background: #effac0;
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 1px 0px 92px -11px  rgba(143, 165, 44, 0.678) inset, 
+    box-shadow: 1px 0px 92px -11px  rgba(192, 216, 85, 0.678) inset, 
     0px 0px 15px rgba(0, 0, 0, 0.171);
     margin-bottom: 30px;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -563,7 +563,8 @@ body.dark-mode .negative {
     background: var(--content-area-bg);
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 5px 15px var(--shadow-light);
+    box-shadow: 1px 0px 92px -11px  rgba(192, 216, 85, 0.678) inset, 
+    0px 0px 15px rgba(0, 0, 0, 0.171);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
