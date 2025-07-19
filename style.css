@@ -619,7 +619,8 @@ body.dark-mode .negative {
     background: var(--card-background);
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 8px 25px var(--shadow-light);
+    box-shadow: inset 0 0 15px rgba(146, 234, 228, 0.411),
+    0 8px 16px rgba(0, 0, 0, 0.2);
     border-left: 5px solid var(--harvard-crimson);
     transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
