@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const linkPath = linkHref.split('/').pop().split('#')[0];
             const linkHash = linkHref.split('#')[1];
 
-            if (currentPath === 'dashboard.html' && linkPath === 'dashboard.html') {
+            if (currentPath === 'index.html' && linkPath === 'index.html') {
                 if (linkHash === currentHash) {
                     link.classList.add('active');
                 } else if (!currentHash && linkHash === 'overview-main') {
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Initial Dashboard Tab Display on Load
-    if (currentPath === 'dashboard.html') {
+    if (currentPath === 'index.html') {
         const hash = window.location.hash.substring(1);
         if (hash && document.getElementById(hash)) {
             showMainTab(hash);
@@ -106,7 +106,7 @@ function showMainTab(tabId) {
     });
     
     // Update URL hash for dashboard internal tabs
-    if (window.location.pathname.endsWith('dashboard.html')) {
+    if (window.location.pathname.endsWith('index.html')) {
         history.replaceState(null, '', `#${tabId}`);
     }
 
